@@ -9,43 +9,35 @@
 </head>
 
 <body>
-
-
     <header id="header">
-
     </header>
 
 
     <main>
-
-
         <div id="product">
+            <p id="endAt"></p>
             <img style="width: 25%; height: 25%;" src="https://images.unsplash.com/photo-1593460354583-4224ab273cfe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Ym13fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80">
-
             <p> BMW FOR SALE !</p>
 
+            <div id="price">
+                <button id="addFive" value="5">5$</button>
+                <button id="addTen" value="10">10$</button>
+                <button id="addTwen" value="20">20$</button>
+            </div>
         </div>
 
         <div id="bidding">
-
-
         </div>
 
-        <div id="price">
-            <button id="addFive" value="5">5$</button>
-        </div>
 
     </main>
 
 
     <footer>
-
-
     </footer>
 
     <script src="http://localhost:5000/socket.io/socket.io.js"></script>
-
-    <script defer src="../client.js"></script>
+    <script defer src="./client.js"></script>
 </body>
 
 </html>
