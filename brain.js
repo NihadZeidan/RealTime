@@ -28,26 +28,38 @@ const io = require("socket.io")(server);
 
 let latest = 0;
 
+
+// let flag = true
+
 io.on('connection', (socket) => {
+
+
+    socket.on('startBidding', (counter) => {
+        setInterval(() => {
+            if (counter == 0) {
+                return counter = 15
+            };
+            counter = counter - 1
+            io.emit('liveCounter', counter);
+        }, 1000);
+
+    });
+
     let users = ''
     socket.on('newUser', data => {
         users = data
         socket.broadcast.emit('greeting', data);
-
     });
-
     console.log('New user Connecter ' + socket.id);
+
 
     socket.on('increasePrice', (total) => {
         io.emit('showLatest', { total: total, name: users });
         latest = total
     });
-    console.log(latest);
+
+
+
 
     socket.emit('liveBid', latest);
-
-    socket.on('userName', name => {
-        console.log(name);
-        io.emit('showName', name)
-    })
 });
