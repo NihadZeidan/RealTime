@@ -11,26 +11,43 @@ const server = http.createServer(app);
 
 const { Server } = require("socket.io");
 
-
-
-app.listen(PORT, () => console.log("listening"));
+server.listen(PORT, () => console.log("listening"));
 
 app.use(express.static('./'));
+
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html')
+    res.sendFile('index.html');
 });
 
+const io = require("socket.io")(server);
 
 
-const io = require("socket.io")(server, { cors: { origin: '*' } });
+// -----------------------------------------------------------
 
-
-
+let latest = 0;
 
 io.on('connection', (socket) => {
-    socket.emit('greeting', "Welcome!");
-});
+    let users = ''
+    socket.on('newUser', data => {
+        users = data
+        socket.broadcast.emit('greeting', data);
 
-// module.exports = app
+    });
+
+    console.log('New user Connecter ' + socket.id);
+
+    socket.on('increasePrice', (total) => {
+        io.emit('showLatest', { total: total, name: users });
+        latest = total
+    });
+    console.log(latest);
+
+    socket.emit('liveBid', latest);
+
+    socket.on('userName', name => {
+        console.log(name);
+        io.emit('showName', name)
+    })
+});
