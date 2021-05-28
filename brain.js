@@ -27,15 +27,14 @@ const io = require("socket.io")(server);
 // -----------------------------------------------------------
 
 
-
-
 let latest = 0;
+
 io.on('connection', (socket) => {
 
 
     socket.on('startBidding', (counter) => {
-        latest = 0;
         setInterval(() => {
+            // latest = 0;
             if (counter == 0) {
                 return counter = 0
             };
@@ -55,12 +54,15 @@ io.on('connection', (socket) => {
 
 
     socket.on('increasePrice', (total) => {
-        io.emit('showLatest', { total: total, name: users });
         latest = total
+        io.emit('showLatest', { total: total, name: users });
     });
 
 
+    io.emit('liveBid', latest);
 
+    socket.on('finish', data => {
+        latest = data
+    });
 
-    socket.emit('liveBid', latest);
 });
