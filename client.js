@@ -52,6 +52,7 @@ socket.on('showLatest', total => {
         // userDiv.append(para);
     bidding.append(para);
     lastUser = total.name
+
     window.setInterval(function() {
         var elem = document.getElementById('bidding');
         elem.scrollTop = elem.scrollHeight;
@@ -60,7 +61,9 @@ socket.on('showLatest', total => {
 });
 
 socket.on('liveBid', (latest) => {
-    totalFromUser = latest
+    totalFromUser = latest;
+    let user = document.getElementById('lastBid')
+    user.innerHTML = `Last Bid is ${latest}$`
 });
 
 // --------------------------------------------------------------------
@@ -99,13 +102,14 @@ socket.on('liveCounter', (data) => {
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction <a href='/'> Home</a>!!`
+            socket.emit('finish', 0)
         } else {
 
             product.style.display = 'none';
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back again on another auction  !!`
-
+            socket.emit('finish', 0)
         }
 
         // showNext.style.display = 'block';
