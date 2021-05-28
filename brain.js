@@ -1,7 +1,7 @@
 'use strict';
 
 const cors = require('cors')
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 
 const express = require('express');
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.static('./'));
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html');
+    res.sendFile('/index.html');
 });
 
 const io = require("socket.io")(server);
