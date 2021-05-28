@@ -1,5 +1,5 @@
 'use strict'
-const socket = io('http://localhost:5000');
+const socket = io();
 
 let text = ''
 text = window.prompt("What is Your name");
@@ -45,12 +45,17 @@ let bidding = document.getElementById('bidding');
 
 socket.on('showLatest', total => {
     totalFromUser = total.total
-    let userDiv = document.createElement('div');
+    // let userDiv = document.createElement('div');
+    // userDiv.setAttribute('id','scroll')
     let para = document.createElement('p');
     para.innerHTML = `${total.name} ${total.total}$`
-    userDiv.append(para);
-    bidding.append(userDiv);
+    // userDiv.append(para);
+    bidding.append(para);
     lastUser = total.name
+    window.setInterval(function() {
+        var elem = document.getElementById('bidding');
+        elem.scrollTop = elem.scrollHeight;
+      }, 0);
 
 });
 
@@ -64,7 +69,7 @@ socket.on('liveBid', (latest) => {
 
 let product = document.getElementById('product');
 
-let counter = 5
+let counter = 15
 
 product.addEventListener('click', () => {
 
@@ -93,19 +98,19 @@ socket.on('liveCounter', (data) => {
             product.style.display = 'none';
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
-            auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction !!`
+            auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction <a href='/'> Home</a>!!`
         } else {
 
             product.style.display = 'none';
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
-            auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back agin on another auction !!`
+            auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back again on another auction  !!`
 
         }
 
         // showNext.style.display = 'block';
         counter = 0
-    }, 5000);
+    }, 15000);
 
 });
 

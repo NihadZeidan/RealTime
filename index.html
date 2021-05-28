@@ -7,33 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="./style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 
-<body>
-    <header id="header">
-    </header>
+<body class="jumbotron">
 
 
-    <main>
-        <div id="product">
+    <main class="container">
+        <div id="product" class="row">
+            <div class="col-4">
+                <div class="text-center">
+                    <p id="endAt" class="font-weight-bold"></p>
+                    <img class="img-fluid mx-auto" width="400"
+                        src="https://images.unsplash.com/photo-1593460354583-4224ab273cfe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Ym13fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80">
 
-            <p id="endAt"></p>
+                    <p id="Description" class="font-weight-bold mt-2 text-center"> BMW FOR SALE !</p>
 
-            <img style="width: 25%; height: 25%;" src="https://images.unsplash.com/photo-1593460354583-4224ab273cfe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Ym13fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80">
-
-            <p id="Description"> BMW FOR SALE !</p>
-
-            <div id="price">
-                <button id="addFive" value="5">5$</button>
-                <button id="addTen" value="10">10$</button>
-                <button id="addTwen" value="20">20$</button>
+                    <div id="price" class="text-center">
+                        <button id="addFive" class=" btn btn-primary" value="500">500$</button>
+                        <button id="addTen" class=" btn btn-primary" value="1000">1000$</button>
+                        <button id="addTwen" class=" btn btn-primary" value="2000">2000$</button>
+                    </div>
+                </div>
+            </div>
+            <header id="header" class="font-weight-normal col-4">
+            </header>
+            <div id="bidding" class="font-weight-bolder col-4" style="height: 400px; width: 100px; overflow-x: hidden; overflow-y: visible;" >
             </div>
 
 
             <!-- <button id="showNext" style="display: none;">Show Next Bidding</button> -->
         </div>
 
-        <p id="auctionEnd" style="display: none;"> </p>
+        <p id="auctionEnd" style="display: none; font-size: 50px;" class="font-weight-bolder"> </p>
 
 
         <!-- <div id="productTwo" style="display: none;">
@@ -51,8 +58,7 @@
         </div> -->
 
 
-        <div id="bidding">
-        </div>
+
 
 
     </main>
@@ -61,8 +67,14 @@
     <footer>
     </footer>
 
-    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script defer src="./client.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
