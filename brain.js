@@ -20,28 +20,28 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.sendFile('/index.html');
 });
-
-const io = require("socket.io")(server);
+let io = require("socket.io")(server);
 
 
 // -----------------------------------------------------------
 
 
-let latest = 0;
+let latest={} ;
 
 io.on('connection', (socket) => {
 
-    socket.on('startBidding', (counter) => {
+    socket.on('startBidding', (obj) => {
+        latest=obj;
         setInterval(() => {
-            // latest = 0;
-            if (counter == 0) {
-                return counter = 0
+            if (obj.counter == 0) {
+                return obj.counter = 0 ,obj.totalFromUser=0;
             };
-            counter = counter - 1;
-            io.emit('liveCounter', counter);
-
+            obj.counter = obj.counter - 1;
+            io.emit('liveCounter', obj.counter);
+            
         }, 1000);
-
+        console.log(obj.totalFromUser , '*-----*',obj.text)
+        // io.emit('liveBid', obj.totalFromUser);
     });
 
     let users = ''
@@ -49,16 +49,22 @@ io.on('connection', (socket) => {
         users = data
         socket.broadcast.emit('greeting', data);
     });
-    console.log('New user Connecter ' + socket.id);
+    // console.log('New user Connected ' + socket.id);
+    // const count = io.engine.clientsCount;
+    // console.log(count);
 
+    
 
     socket.on('increasePrice', (total) => {
-        latest = total
+        // console.log(total);
+        // latest = total
+        // console.log(latest,'ssasasa');
         io.emit('showLatest', { total: total, name: users });
     });
+    
+    io.emit('liveBid', latest.totalFromUser);
 
-
-    io.emit('liveBid', latest);
+    
 
 
 });
