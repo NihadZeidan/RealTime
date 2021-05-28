@@ -77,7 +77,6 @@ let counter = 60
 product.addEventListener('click', function add() {
     socket.emit('startBidding', counter);
     clearTimeout();
-    product.removeEventListener('click', add);
 });
 
 
@@ -103,6 +102,7 @@ socket.on('liveCounter', (data) => {
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction <a href='/'> Home</a>!!`
             socket.emit('finish', 0)
+            product.removeEventListener('click', add);
         } else {
 
             product.style.display = 'none';
@@ -110,6 +110,7 @@ socket.on('liveCounter', (data) => {
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back again on another auction  !!`
             socket.emit('finish', 0)
+            product.removeEventListener('click', add);
         }
 
         // showNext.style.display = 'block';
