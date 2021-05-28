@@ -45,17 +45,17 @@ let bidding = document.getElementById('bidding');
 
 socket.on('showLatest', total => {
     totalFromUser = total.total
-    // let userDiv = document.createElement('div');
-    // userDiv.setAttribute('id','scroll')
+        // let userDiv = document.createElement('div');
+        // userDiv.setAttribute('id','scroll')
     let para = document.createElement('p');
     para.innerHTML = `${total.name} ${total.total}$`
-    // userDiv.append(para);
+        // userDiv.append(para);
     bidding.append(para);
     lastUser = total.name
     window.setInterval(function() {
         var elem = document.getElementById('bidding');
         elem.scrollTop = elem.scrollHeight;
-      }, 0);
+    }, 0);
 
 });
 
@@ -69,7 +69,7 @@ socket.on('liveBid', (latest) => {
 
 let product = document.getElementById('product');
 
-let counter = 15
+let counter = 60
 
 product.addEventListener('click', () => {
 
@@ -110,7 +110,7 @@ socket.on('liveCounter', (data) => {
 
         // showNext.style.display = 'block';
         counter = 0
-    }, 15000);
+    }, 60000);
 
 });
 

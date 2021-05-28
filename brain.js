@@ -34,9 +34,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('startBidding', (counter) => {
-
         latest = 0;
-
         setInterval(() => {
             if (counter == 0) {
                 return counter = 0
