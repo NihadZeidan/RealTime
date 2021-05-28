@@ -114,7 +114,7 @@ socket.on('liveCounter', (data) => {
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back again on another auction  !!`
-
+            totalFromUser = 0
         }
 
         counter = 0
