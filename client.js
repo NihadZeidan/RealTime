@@ -41,9 +41,10 @@ socket.on("greeting", (data) => {
     header.append(head);
 });
 
+let bidding = document.getElementById('bidding');
+
 socket.on('showLatest', total => {
     totalFromUser = total.total
-    let bidding = document.getElementById('bidding');
     let userDiv = document.createElement('div');
     let para = document.createElement('p');
     para.innerHTML = `${total.name} ${total.total}$`
@@ -59,34 +60,70 @@ socket.on('liveBid', (latest) => {
 
 // --------------------------------------------------------------------
 
+
+
 let product = document.getElementById('product');
-let end = document.getElementById('endAt')
 
-
-
-let counter = 15
+let counter = 5
 
 product.addEventListener('click', () => {
+
     socket.emit('startBidding', counter);
+    clearTimeout();
 });
 
 
 
-setTimeout(() => {
-    product.setAttribute('style', 'display: none');
-    if (totalFromUser == 0) {
-        window.alert(`Not Sold`);
-    } else {
-        window.alert(`Sold to ${lastUser}`);
-    }
-
-    // clearInterval()
-
-}, 15000);
+let auctionEnd = document.getElementById('auctionEnd')
+    // let showNext = document.getElementById('showNext')
+let end = document.getElementById('endAt')
+    // let endAtTwo = document.getElementById('endAtTwo')
 
 socket.on('liveCounter', (data) => {
-    // socket.emit('updatedCounter', counter)
+
     counter = data;
+
     end.innerHTML = `${counter} Seconds left`
 
+    // endAtTwo.innerHTML = `${counter} Seconds left`
+
+
+    setTimeout(() => {
+        if (totalFromUser == 0) {
+            product.style.display = 'none';
+            auctionEnd.style.display = 'block'
+            bidding.style.display = 'none'
+            auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction !!`
+        } else {
+
+            product.style.display = 'none';
+            auctionEnd.style.display = 'block'
+            bidding.style.display = 'none'
+            auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back agin on another auction !!`
+
+        }
+
+        // showNext.style.display = 'block';
+        counter = 0
+    }, 5000);
+
 });
+
+// let productTwo = document.getElementById("productTwo");
+
+// showNext.addEventListener('click', () => {
+//     product.style.display = 'none'
+//     productTwo.style.display = 'block'
+//     clearTimeout();
+
+
+// });
+
+
+
+// productTwo.addEventListener('click', () => {
+//     // product.removeEventListener()
+
+//     socket.emit('startBidding', counter);
+//     clearTimeout();
+// });
