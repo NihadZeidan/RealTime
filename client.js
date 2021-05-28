@@ -9,7 +9,6 @@ let addFive = document.getElementById("addFive");
 let addTen = document.getElementById('addTen')
 let addTwen = document.getElementById('addTwen')
 
-
 let totalFromUser = 0
 let lastUser = ''
 
@@ -45,11 +44,9 @@ let bidding = document.getElementById('bidding');
 
 socket.on('showLatest', total => {
     totalFromUser = total.total
-        // let userDiv = document.createElement('div');
-        // userDiv.setAttribute('id','scroll')
+
     let para = document.createElement('p');
     para.innerHTML = `${total.name} ${total.total}$`
-        // userDiv.append(para);
     bidding.append(para);
     lastUser = total.name
 
@@ -74,65 +71,44 @@ let product = document.getElementById('product');
 
 let counter = 60
 
-product.addEventListener('click', function add() {
+product.addEventListener('click', add)
+
+function add() {
     socket.emit('startBidding', counter);
     clearTimeout();
-    product.removeEventListener('click', add);
-});
+}
 
 
 
 let auctionEnd = document.getElementById('auctionEnd')
-    // let showNext = document.getElementById('showNext')
 let end = document.getElementById('endAt')
-    // let endAtTwo = document.getElementById('endAtTwo')
 
 socket.on('liveCounter', (data) => {
 
     counter = data;
 
+
     end.innerHTML = `${counter} Seconds left`
-
-    // endAtTwo.innerHTML = `${counter} Seconds left`
-
 
     setTimeout(() => {
         if (totalFromUser == 0) {
+            product.removeEventListener('click', add);
             product.style.display = 'none';
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `No one Bidded on the product, please come back agin on another auction <a href='/'> Home</a>!!`
-            socket.emit('finish', 0)
-        } else {
 
+        } else {
+            product.removeEventListener('click', add);
             product.style.display = 'none';
             auctionEnd.style.display = 'block'
             bidding.style.display = 'none'
             auctionEnd.innerHTML = `The product Sold to ${lastUser}, please come back again on another auction  !!`
-            socket.emit('finish', 0)
+
         }
 
-        // showNext.style.display = 'block';
         counter = 0
+
     }, 60000);
 
 });
-
-// let productTwo = document.getElementById("productTwo");
-
-// showNext.addEventListener('click', () => {
-//     product.style.display = 'none'
-//     productTwo.style.display = 'block'
-//     clearTimeout();
-
-
-// });
-
-
-
-// productTwo.addEventListener('click', () => {
-//     // product.removeEventListener()
-
-//     socket.emit('startBidding', counter);
-//     clearTimeout();
-// });
