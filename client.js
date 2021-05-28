@@ -75,9 +75,9 @@ let product = document.getElementById('product');
 let counter = 60
 
 product.addEventListener('click', () => {
-
     socket.emit('startBidding', counter);
     clearTimeout();
+    product.removeEventListener('click')
 });
 
 
