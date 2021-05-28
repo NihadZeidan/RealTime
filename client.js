@@ -5,14 +5,22 @@ let text = ''
 text = window.prompt("What is Your name");
 socket.emit('newUser', text);
 
-let addFive = document.getElementById("addFive");
-let addTen = document.getElementById('addTen')
-let addTwen = document.getElementById('addTwen')
-
 let totalFromUser = 0
 let lastUser = ''
 
-// ----------------------------------------------
+let addFive = document.getElementById("addFive");
+let addTwen = document.getElementById('addTwen');
+let addTen = document.getElementById('addTen');
+// ---------------------------------------------------
+
+addFive.addEventListener('click', function(e) {
+    let dollar = parseInt(addFive.value);
+    totalFromUser += dollar;
+    socket.emit('increasePrice', totalFromUser);
+
+});
+
+
 addTwen.addEventListener('click', function(e) {
     let dollar = parseInt(addTwen.value);
     totalFromUser += dollar;
@@ -25,13 +33,10 @@ addTen.addEventListener('click', function(e) {
     socket.emit('increasePrice', totalFromUser);
 });
 
-addFive.addEventListener('click', function(e) {
-    let dollar = parseInt(addFive.value);
-    totalFromUser += dollar;
-    socket.emit('increasePrice', totalFromUser);
 
-});
 // ----------------------------------------------
+
+
 
 socket.on("greeting", (data) => {
     let head = document.createElement('h1');
@@ -73,6 +78,8 @@ let counter = 60
 
 product.addEventListener('click', add)
 
+
+
 function add() {
     socket.emit('startBidding', counter);
     clearTimeout();
@@ -82,10 +89,13 @@ function add() {
 
 let auctionEnd = document.getElementById('auctionEnd')
 let end = document.getElementById('endAt')
+let timeOut = 0;
 
 socket.on('liveCounter', (data) => {
 
     counter = data;
+
+    timeOut = counter * 1000
 
 
     end.innerHTML = `${counter} Seconds left`
@@ -109,6 +119,6 @@ socket.on('liveCounter', (data) => {
 
         counter = 0
 
-    }, 60000);
+    }, timeOut);
 
 });
