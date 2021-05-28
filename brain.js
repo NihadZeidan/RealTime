@@ -26,21 +26,24 @@ const io = require("socket.io")(server);
 
 // -----------------------------------------------------------
 
+
+
+
 let latest = 0;
-
-
-// let flag = true
-
 io.on('connection', (socket) => {
 
 
     socket.on('startBidding', (counter) => {
+
+        latest = 0;
+
         setInterval(() => {
             if (counter == 0) {
-                return counter = 15
+                return counter = 0
             };
-            counter = counter - 1
+            counter = counter - 1;
             io.emit('liveCounter', counter);
+
         }, 1000);
 
     });
