@@ -31,10 +31,9 @@ let latest = 0;
 
 io.on('connection', (socket) => {
 
-
     socket.on('startBidding', (counter) => {
         setInterval(() => {
-            // latest = 0;
+            latest = 0;
             if (counter == 0) {
                 return counter = 0
             };
@@ -60,7 +59,6 @@ io.on('connection', (socket) => {
 
 
     io.emit('liveBid', latest);
-
     socket.on('finish', data => {
         latest = data
     });
