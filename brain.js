@@ -26,14 +26,15 @@ const io = require("socket.io")(server);
 
 // -----------------------------------------------------------
 
+let products=[{}]
 
 let latest = 0;
 
 io.on('connection', (socket) => {
 
     socket.on('startBidding', (counter) => {
+        latest = 0;
         setInterval(() => {
-            // latest = 0;
             if (counter == 0) {
                 return counter = 0
             };
@@ -55,6 +56,7 @@ io.on('connection', (socket) => {
     socket.on('increasePrice', (total) => {
         latest = total
         io.emit('showLatest', { total: total, name: users });
+        console.log('total from increasePrice ',total)
     });
 
 
