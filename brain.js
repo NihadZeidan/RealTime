@@ -26,22 +26,22 @@ let io = require("socket.io")(server);
 // -----------------------------------------------------------
 
 
-let latest={} ;
+let latest = {};
 
 io.on('connection', (socket) => {
 
     socket.on('startBidding', (obj) => {
-        latest=obj;
+        latest = obj;
         setInterval(() => {
             if (obj.counter == 0) {
-                return obj.counter = 0 ,obj.totalFromUser=0;
+                return obj.counter = 0, obj.totalFromUser = 0;
             };
             obj.counter = obj.counter - 1;
             io.emit('liveCounter', obj.counter);
-            
+
         }, 1000);
-        console.log(obj.totalFromUser , '*-----*',obj.text)
-        // io.emit('liveBid', obj.totalFromUser);
+        console.log(obj.totalFromUser, '*-----*', obj.text)
+            // io.emit('liveBid', obj.totalFromUser);
     });
 
     let users = ''
@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     // const count = io.engine.clientsCount;
     // console.log(count);
 
-    
+
 
     socket.on('increasePrice', (total) => {
         // console.log(total);
@@ -61,10 +61,10 @@ io.on('connection', (socket) => {
         // console.log(latest,'ssasasa');
         io.emit('showLatest', { total: total, name: users });
     });
-    
+
     io.emit('liveBid', latest.totalFromUser);
 
-    
+
 
 
 });
