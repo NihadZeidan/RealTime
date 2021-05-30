@@ -16,7 +16,7 @@ let addTen = document.getElementById('addTen');
 addFive.addEventListener('click', function(e) {
     let dollar = parseInt(addFive.value);
     totalFromUser += dollar;
-    socket.emit('increasePrice', totalFromUser);    
+    socket.emit('increasePrice', totalFromUser);
 
 });
 
@@ -49,7 +49,7 @@ let bidding = document.getElementById('bidding');
 
 socket.on('showLatest', total => {
     totalFromUser = parseInt(total.total)
-   
+
 
     let para = document.createElement('p');
     para.innerHTML = `${total.name} ${total.total}$`
@@ -65,8 +65,9 @@ socket.on('showLatest', total => {
 socket.on('liveBid', (latest) => {
     totalFromUser = latest;
     console.log(latest);
-    let user = document.getElementById('lastBid')
+    let user = document.createElement('p')
     user.innerHTML = `Last Bid is ${latest}$`
+    bidding.append(user);
 });
 
 // --------------------------------------------------------------------
@@ -82,7 +83,7 @@ product.addEventListener('click', add)
 
 
 function add() {
-    socket.emit('startBidding', {counter , totalFromUser,text});
+    socket.emit('startBidding', { counter, totalFromUser, text });
     clearTimeout();
 }
 
@@ -119,7 +120,7 @@ socket.on('liveCounter', (data) => {
         }
 
         counter = 0
-        // totalFromUser = 0
+            // totalFromUser = 0
     }, timeOut);
 
 });
